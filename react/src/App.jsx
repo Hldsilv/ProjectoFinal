@@ -1,35 +1,62 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect, useState } from 'react';
+import { fetchForecastForSJM } from './services/ipmaapi';
+import { fetchLatestNews } from './services/publicoapi';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [forecast, setForecast] = useState([]);
+  const [news, setNews] = useState([]);
+
+  useEffect(() => {
+    // Buscar dados das duas APIs
+    const getData = async () => {
+      const [weatherData, latestNews] = await Promise.all([
+        fetchForecastForSJM(),
+        fetchLatestNews(),
+      ]);
+
+      setForecast(weatherData || []);
+      setNews(latestNews || []);
+    };
+
+    getData();
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div>
+      <h1>Painel de Informações</h1>
 
-export default App
+      {/* Secção de Previsão Meteorológica */}
+      <section>
+        <h2>Previsão Meteorológica para São João da Madeira</h2>
+        <ul>
+          {forecast.map((day, index) => (
+            <li key={index}>
+              <p>Data: {day.forecastDate}</p>
+              <p>Temperatura Mínima: {day.tMin}°C</p>
+              <p>Temperatura Máxima: {day.tMax}°C</p>
+              <p>Probabilidade de Precipitação: {day.precipitaProb}%</p>
+              <p>Direção do Vento: {day.predWindDir}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* Secção de Notícias */}
+      <section>
+        <h2>Últimas Notícias</h2>
+        <ul>
+          {news.map((article, index) => (
+            <li key={index}>
+              <a href={article.link} target="_blank" rel="noopener noreferrer">
+                {article.titulo}
+              </a>
+              <p>{article.descricao}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  );
+};
+
+export default App;
