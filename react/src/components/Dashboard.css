@@ -1,72 +1,93 @@
-/* Container principal */
-.dashboard-container {
-  font-family: Arial, sans-serif;
-  background-color: #f8f9fa;
-  color: #333;
-  display: grid;
-  grid-template-rows: auto 1fr 1fr auto;
-  gap: 15px;
-  padding: 20px;
+/* Define o texto padrão como preto */
+body, h1, h2, h3, h4, h5, h6, p, ul, li {
+  color: #000; /* Texto preto */
+  margin: 0;
+  padding: 0;
 }
 
-/* Header */
+/* Container principal do Dashboard */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  height: 100vh; /* Garante que ocupa toda a altura da tela */
+  box-sizing: border-box; /* Inclui padding e borda no cálculo de altura/largura */
+  overflow: hidden; /* Evita que conteúdo transborde */
+}
+
+/* Header fixo */
 .header {
   display: flex;
-  justify-content: space-between; /* Logo à esquerda, hora à direita */
+  justify-content: space-between;
   align-items: center;
   background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
   padding: 10px 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .logo {
-  width: 250px;
-  height: auto;
+  width: 200px;
+}
+
+.date-time {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #555;
+}
+
+/* Grid principal dos painéis */
+.main-section {
+  display: grid;
+  grid-template-columns: 25% 50% 25%; /* Colunas fixas */
+  grid-template-rows: 1fr 1fr; /* Duas linhas, altura igual distribuída */
+  gap: 10px;
+  flex: 1; /* Ocupa o espaço restante da tela */
+  height: 100%; /* Garante que o grid se ajuste corretamente */
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Painéis */
+.box {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Evita que conteúdo interno transborde */
+}
+
+/* Painéis da primeira linha */
+.first-row {
+  height: 50%;
+}
+
+.first-row-center {
+  height: 75%;
+}
+
+/* Painéis da segunda linha */
+.second-row {
+  height: 50%;
+}
+
+.second-row-center {
+  height: 25%;
 }
 
 .date-time {
   font-size: 1.2rem;
   font-weight: bold;
-  color: #333;
+  color: #000; /* Texto preto */
   text-align: right;
-}
-
-/* Seções principais */
-.main-section,
-.bottom-section {
-  display: flex;
-  gap: 15px;
-}
-
-.box {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 15px;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  flex: 1;
-}
-
-.course-cards {
-  display: flex;
-  justify-content: space-around;
-  gap: 10px;
-}
-
-.card img {
-  width: 100%;
-  border-radius: 8px;
-}
-
-/* Footer */
-.footer {
-  text-align: center;
-  font-weight: bold;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }

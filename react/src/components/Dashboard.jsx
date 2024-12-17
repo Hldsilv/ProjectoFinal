@@ -1,113 +1,85 @@
 import React, { useState, useEffect } from "react";
 import "./Dashboard.css";
 import logoCesae from "../assets/logo_cesae-cores_horizontal_header_site.png";
-import Weather from "./Weather";
+import { useDashboard } from "../context/DashboardContext";
+import WeatherPanel from "./panels/WeatherPanel";
+import RoomsPanel from "./panels/RoomsPanel";
+import CoursesPanel from "./panels/CoursesPanel";
+import TransportsPanel from "./panels/TransportsPanel";
+import EventsPanel from "./panels/EventsPanel";
+import RestaurantPanel from "./panels/RestaurantPanel";
+
+const panelComponents = {
+  RoomsPanel,
+  CoursesPanel,
+  TransportsPanel,
+  EventsPanel,
+  WeatherPanel,
+  RestaurantPanel,
+};
 
 export default function Dashboard() {
-  const [currentTime, setCurrentTime] = useState("");
+  const { panels } = useDashboard();
+  const [currentDateTime, setCurrentDateTime] = useState("");
 
-  // Atualiza a data e a hora dinamicamente
+  // Atualiza a data e hora a cada segundo
   useEffect(() => {
     const updateClock = () => {
       const now = new Date();
-      const options = { weekday: "long", day: "2-digit", month: "long", year: "numeric" };
-      const time = now.toLocaleTimeString("pt-PT");
-      const date = now.toLocaleDateString("pt-PT", options);
-      setCurrentTime(`${date} - ${time}`);
+      
+      const day = String(now.getDate()).padStart(2, "0");
+      const month = now.toLocaleString("pt-PT", { month: "long" }); // Nome do mês
+      const year = now.getFullYear();
+      const time = now.toLocaleTimeString("pt-PT", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      });
+
+      setCurrentDateTime(`${day} de ${month} de ${year}, ${time}`);
     };
 
-    updateClock();
-    const timer = setInterval(updateClock, 1000);
-    return () => clearInterval(timer); // Limpar o timer ao desmontar
+    updateClock(); // Atualiza imediatamente
+    const timer = setInterval(updateClock, 1000); // Atualiza a cada 1 segundo
+
+    return () => clearInterval(timer); // Limpa o intervalo ao desmontar o componente
   }, []);
+
+  const panelOrder = [
+    "RoomsPanel",
+    "CoursesPanel",
+    "TransportsPanel",
+    "EventsPanel",
+    "WeatherPanel",
+    "RestaurantPanel",
+  ];
 
   return (
     <div className="dashboard-container">
-      {/* Header com logo à esquerda e hora à direita */}
+      {/* Header */}
       <header className="header">
         <img src={logoCesae} alt="CESAE Digital" className="logo" />
-        <div className="date-time">{currentTime}</div>
+        <div className="date-time">{currentDateTime}</div>
       </header>
 
-      {/* Linha principal: Salas Disponíveis | Cursos | Transportes */}
+      {/* Grid com os painéis */}
       <div className="main-section">
-        <div className="box rooms">
-          <h2>Salas Disponíveis</h2>
-          <ul>
-            <li>1.3.B</li>
-            <li>1.5.A</li>
-            <li>1.4.B</li>
-          </ul>
-        </div>
+        {panelOrder.map((panelName) => {
+          const panel = panels.find((p) => p.component === panelName && p.visible);
+          if (!panel) return null;
 
-        <div className="box courses">
-          <h2>Cursos a Decorrer</h2>
-          <div className="course-cards">
-            <div className="card">
-              <img src="https://via.placeholder.com/150" alt="Curso" />
-              <p>Programação em Laravel</p>
-              <p>🗓 Termina a 2025/02/20</p>
+          const Component = panelComponents[panelName];
+          return (
+            <div key={panel.id || panelName} className="box">
+              {panelName === "RoomsPanel" ? (
+                <Component currentTime={currentDateTime.split(", ")[1].slice(0, 5)} />
+              ) : (
+                <Component />
+              )}
             </div>
-            <div className="card">
-              <img src="https://via.placeholder.com/150" alt="Curso" />
-              <p>Programação em Laravel</p>
-              <p>🗓 Termina a 2025/02/20</p>
-            </div>
-            <div className="card">
-              <img src="https://via.placeholder.com/150" alt="Curso" />
-              <p>Programação em Laravel</p>
-              <p>🗓 Termina a 2025/02/20</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="box transports">
-          <h2>Transportes</h2>
-          <p>SJM - Porto</p>
-          <ul>
-            <li>9:00h</li>
-            <li>10:00h</li>
-            <li>11:00h</li>
-          </ul>
-          <p>SJM - Lisboa</p>
-          <ul>
-            <li>10:00h</li>
-            <li>11:00h</li>
-          </ul>
-        </div>
+          );
+        })}
       </div>
-
-      {/* Linha secundária: Eventos | Previsão do Tempo | Restaurante */}
-      <div className="bottom-section">
-        <div className="box events">
-          <h2>Eventos</h2>
-          <p>16/10/2024 - CEO MANAGEMENT</p>
-          <p>23/10/2024 - RH MEETING</p>
-        </div>
-
-        <div className="box weather">
-          <h2>Meteorologia</h2>
-          <Weather />
-        </div>
-
-        <div className="box restaurant">
-          <h2>Restaurante</h2>
-          <p>Menu do Dia</p>
-          <ul>
-            <li>Filetes de polvo com arroz de tomate</li>
-            <li>Francesinha vegan</li>
-          </ul>
-        </div>
-      </div>
-
-      {/* Rodapé */}
-      <footer className="footer">
-        <h3>Notícias:</h3>
-        <p>
-          Tesouro encontrado no parque de S.J.Madeira //
-          Novo serviço de drones em SJM
-        </p>
-      </footer>
     </div>
   );
 }
