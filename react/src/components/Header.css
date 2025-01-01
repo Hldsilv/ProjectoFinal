@@ -1,0 +1,19 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-bottom: 2px solid #ddd;
+  }
+  
+  .logo {
+    height: 60px;
+  }
+  
+  .date-time {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: right;
+  }
+  
