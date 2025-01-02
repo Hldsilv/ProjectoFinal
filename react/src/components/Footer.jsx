@@ -6,8 +6,22 @@ export default function Footer() {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentTime, setCurrentTime] = useState("");
 
   useEffect(() => {
+    // Timer para o relógio
+    const timer = setInterval(() => {
+      const now = new Date();
+      setCurrentTime(
+        now.toLocaleTimeString('pt-PT', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        })
+      );
+    }, 1000);
+
+    // Buscar notícias
     const getNews = async () => {
       try {
         const headlines = await fetchLatestNews();
@@ -20,30 +34,30 @@ export default function Footer() {
     };
 
     getNews();
+    const newsInterval = setInterval(getNews, 300000);
 
-    // Atualiza as notícias a cada 5 minutos
-    const interval = setInterval(getNews, 300000);
-
-    return () => clearInterval(interval); // Limpa o intervalo ao desmontar o componente
+    return () => {
+      clearInterval(timer);
+      clearInterval(newsInterval);
+    };
   }, []);
-
-  if (loading) {
-    return <div className="footer">Carregando notícias...</div>;
-  }
-
-  if (error) {
-    return <div className="footer">{error}</div>;
-  }
 
   return (
     <footer className="footer">
       <div className="news-ticker">
-        {news.map((headline, index) => (
-          <span key={index}>
-            {headline} {index < news.length - 1 && " // "}
-          </span>
-        ))}
+        {loading ? (
+          "Carregando notícias..."
+        ) : error ? (
+          error
+        ) : (
+          news.map((headline, index) => (
+            <span key={index}>
+              {headline} {index < news.length - 1 && " // "}
+            </span>
+          ))
+        )}
       </div>
+      <div className="time-display">{currentTime}</div>
     </footer>
   );
 }

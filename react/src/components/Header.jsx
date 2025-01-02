@@ -19,7 +19,7 @@ export default function Header() {
         second: "2-digit",
       });
 
-      setCurrentDateTime(`${day} de ${month} de ${year}, ${time}`);
+      setCurrentDateTime(`${day} de ${month} de ${year}`);
     };
 
     updateClock(); // Atualiza imediatamente
