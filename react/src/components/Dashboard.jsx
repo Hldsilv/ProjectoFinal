@@ -30,7 +30,7 @@ export default function Dashboard() {
     "RoomsPanel",
     "CoursesPanel",
     "TransportsPanel",
-    "EventsPanel",,
+    "EventsPanel",
     "RestaurantPanel",
   ];
 
@@ -68,6 +68,11 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard-container">
+      <div className="vid-back">
+        <video autoPlay muted loop>
+          <source src="/videos/perfectly.mp4" type="video/mp4" />
+        </video>
+      </div>
       <div className="main-content">
         <Header />
         <div className="welcome-section">
