@@ -6,12 +6,14 @@ import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import AdminPanel from "./components/AdminPanel";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Keys from "./components/Keys";
 
 function App() {
   return (
     <AuthProvider>
       <DashboardProvider>
         <Router>
+          <Keys />
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/login" element={<Login />} />

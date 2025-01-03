@@ -8,7 +8,7 @@ export const fetchForecastForSJM = async () => {
     const response = await fetch(url);
     if (!response.ok) throw new Error(`Erro na API: ${response.statusText}`);
     const data = await response.json();
-    return data.data.slice(0, 2); // Retorna os dados para hoje e amanhã
+    return data.data; 
   } catch (error) {
     console.error("Erro ao buscar previsão do tempo:", error);
     return [];

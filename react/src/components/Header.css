@@ -2,17 +2,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    background-color: #f8f8f8;
-    border-bottom: 2px solid #ddd;
+    width: 75%;
+    background-color: #ffffff;
+
   }
+
   
   .logo {
-    height: 60px;
+    height: 10vh;
   }
   
   .date-time {
-    font-size: 1.2rem;
+    font-size: 4vh;
     font-weight: bold;
     text-align: right;
   }

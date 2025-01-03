@@ -1,52 +1,50 @@
 import React, { useEffect, useState } from "react";
 import { fetchForecastForSJM } from "../services/weatherAPI";
+import "./Weather.css";
 
 export default function Weather() {
   const [forecast, setForecast] = useState([]);
-  const [currentDay, setCurrentDay] = useState(0); // 0 para Hoje, 1 para Amanhã
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getForecast = async () => {
       const data = await fetchForecastForSJM();
       if (data) {
-        setForecast(data.slice(0, 2)); // Pega apenas Hoje e Amanhã
+        setForecast(data);
         setLoading(false);
       }
     };
     getForecast();
   }, []);
 
-  useEffect(() => {
-    // Alternar entre hoje e amanhã a cada 10 segundos
-    const interval = setInterval(() => {
-      setCurrentDay((prevDay) => (prevDay === 0 ? 1 : 0));
-    }, 10000);
-
-    return () => clearInterval(interval); // Limpar intervalo ao desmontar o componente
-  }, []);
-
   if (loading) {
     return <p>Carregando previsão...</p>;
   }
 
-  const dayForecast = forecast[currentDay];
+  const getDayName = (dateString) => {
+    const days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+    const date = new Date(dateString);
+    return days[date.getDay()];
+  };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "20px" }}>
-      <h2>São João da Madeira</h2>
-      {dayForecast ? (
-        <div>
-          <h2>{currentDay === 0 ? "Hoje" : "Amanhã"}</h2>
-          <p>Data: {dayForecast.forecastDate}</p>
-          <p>Temperatura Mínima: {dayForecast.tMin}°C</p>
-          <p>Temperatura Máxima: {dayForecast.tMax}°C</p>
-          <p>Probabilidade de Precipitação: {dayForecast.precipitaProb}%</p>
-          <p>Direção do Vento: {dayForecast.predWindDir}</p>
+    <div className="weather-container">
+      <h1 className="weather-title">Meteorologia</h1>
+      {forecast.map((day, index) => (
+        <div key={index} className="weather-day">
+          <div className="weather-day-info">
+            <span className="day-name">
+              {index === 0 ? "Hoje" : index === 1 ? "Amanhã" : getDayName(day.forecastDate)}
+            </span>
+            <span className="temperature">{day.tMax}° / {day.tMin}°</span>
+          </div>
+          <img 
+            src={`/images/${day.idWeatherType}.png`} 
+            alt="Condição do tempo" 
+            className="weather-icon"
+          />
         </div>
-      ) : (
-        <p>Sem dados disponíveis.</p>
-      )}
+      ))}
     </div>
   );
 }

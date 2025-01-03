@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useAuth } from "../context/AuthContext"; // Importação correta
+import { useAuth } from "../context/AuthContext"; 
+import "./Login.css";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -28,30 +29,38 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Username:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Entrar</button>
-        {error && <p>{error}</p>}
-      </form>
+    <div className="login-container">
+      <div className="video-background">
+        <video autoPlay muted loop playsInline>
+          <source src="/videos/plex.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div className="login-box">
+        <h2 className="login-title">ADMIN LOGIN</h2>
+        <form onSubmit={handleLogin}>
+          <div className="input-group">
+            <label>Username</label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <label>Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <hr className="login-divider" />
+          <button type="submit" className="login-button">LOGIN</button>
+          {error && <p className="error-message">{error}</p>}
+        </form>
+      </div>
     </div>
   );
 }

@@ -1,32 +1,61 @@
 .footer {
-    background-color: #333;
-    color: #fff;
-    padding: 10px 20px;
-    position: sticky;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    overflow: hidden;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  width: 100%;
+  height: 5vw;
+  position: fixed;
+  bottom: 0;
+  border-top: 2px solid #ddd;
+}
+
+.news-ticker {
+  background-color: white;
+  color: black;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  font-size: 1.2em;
+}
+
+.news-ticker span {
+  display: inline-block;
+  animation: moveLeft 20s linear infinite;
+}
+
+@keyframes moveLeft {
+  0% {
+    transform: translateX(100%);
   }
-  
-  .news-ticker {
-    white-space: nowrap;
-    overflow: hidden;
-    display: inline-block;
-    animation: scroll 20s linear infinite;
+  100% {
+    transform: translateX(-100%);
   }
-  
-  .news-ticker span {
-    display: inline-block;
-    margin-right: 30px;
-  }
-  
-  @keyframes scroll {
-    0% {
-      transform: translateX(100%);
-    }
-    100% {
-      transform: translateX(-100%);
-    }
-  }
+}
+
+/* Label "Notícias" */
+.footer::before {
+  content: "Notícias";
+  background: linear-gradient(90deg, #272E3A 0.22%, #476176 99.76%);
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  clip-path: polygon(0 0, 100% 0, 65% 100%, 0 100%);
+  min-width: 200px;
+  font-size: 1.5vw;
+  color: #ffffff;
+}
+
+/* Estilo para o relógio */
+.time-display {
+  font-size: 2.5vw;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  border-left: 1px solid #ddd;
+}
   
