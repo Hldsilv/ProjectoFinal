@@ -25,8 +25,19 @@ export default function Dashboard() {
   const { panels } = useDashboard();
   const [currentPanelIndex, setCurrentPanelIndex] = useState(-1); // -1 representa o BEM VINDO
 
+
   // Array com a ordem dos painéis visíveis
   const visiblePanels = panels.filter((panel) => panel.visible).map((panel) => panel.component);
+
+  // Array com a ordem dos painéis
+  const panelOrder = [
+    "RoomsPanel",
+    "CoursesPanel",
+    "TransportsPanel",
+    "EventsPanel",
+    "RestaurantPanel",
+  ];
+
 
   // Efeito para alternar entre Bem-Vindo e os painéis visíveis
   useEffect(() => {
@@ -63,7 +74,15 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard-container">
+
       <Header />
+
+      <div className="vid-back">
+        <video autoPlay muted loop>
+          <source src="/videos/perfectly.mp4" type="video/mp4" />
+        </video>
+      </div>
+
       <div className="main-content">
         <div className="welcome-section">{getCurrentContent()}</div>
         <div className="weather-sidebar">
