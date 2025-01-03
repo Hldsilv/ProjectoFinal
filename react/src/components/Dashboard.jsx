@@ -25,21 +25,17 @@ export default function Dashboard() {
   const { panels } = useDashboard();
   const [currentPanelIndex, setCurrentPanelIndex] = useState(-1); // -1 representa o BEM VINDO
 
-  // Array com a ordem dos painéis
-  const panelOrder = [
-    "RoomsPanel",
-    "CoursesPanel",
-    "TransportsPanel",
-    "EventsPanel",,
-    "RestaurantPanel",
-  ];
+  // Array com a ordem dos painéis visíveis
+  const visiblePanels = panels.filter((panel) => panel.visible).map((panel) => panel.component);
 
-  // Efeito para alternar entre Bem-vindo e painéis
+  // Efeito para alternar entre Bem-Vindo e os painéis visíveis
   useEffect(() => {
+    if (visiblePanels.length === 0) return; // Se não houver painéis visíveis, não alterna
+
     const interval = setInterval(() => {
-      setCurrentPanelIndex(prevIndex => {
-        // Se for o último painel, volta para BEM VINDO (-1)
-        if (prevIndex === panelOrder.length - 1) {
+      setCurrentPanelIndex((prevIndex) => {
+        // Se for o último painel visível, volta para BEM VINDO (-1)
+        if (prevIndex === visiblePanels.length - 1) {
           return -1;
         }
         // Caso contrário, vai para o próximo painel
@@ -48,19 +44,18 @@ export default function Dashboard() {
     }, 10000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [visiblePanels]);
 
   // Encontra o painel atual baseado no índice
   const getCurrentContent = () => {
     // Se o índice for -1, mostra BEM VINDO
     if (currentPanelIndex === -1) {
-      return <h1 className="welcome-title">BEM VINDO</h1>;
+      return <h1 className="welcome-title">BEM-VINDO</h1>;
     }
 
     // Caso contrário, mostra o painel correspondente
-    const currentPanelName = panelOrder[currentPanelIndex];
-    const panel = panels.find(p => p.component === currentPanelName && p.visible);
-    if (!panel) return null;
+    const currentPanelName = visiblePanels[currentPanelIndex];
+    if (!currentPanelName) return null;
 
     const Component = panelComponents[currentPanelName];
     return <Component />;
@@ -68,11 +63,9 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard-container">
+      <Header />
       <div className="main-content">
-        <Header />
-        <div className="welcome-section">
-          {getCurrentContent()}
-        </div>
+        <div className="welcome-section">{getCurrentContent()}</div>
         <div className="weather-sidebar">
           <Weather />
         </div>
