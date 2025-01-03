@@ -1,13 +1,23 @@
 import React from "react";
 import { useDashboard } from "../context/DashboardContext";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import "./AdminPanel.css";
 
 export default function AdminPanel() {
-  const { panels, loading } = useDashboard();
+  const { panels, loading, updatePanelVisibility } = useDashboard();
+  const navigate = useNavigate(); // Initialize useNavigate
 
   if (loading) {
     return <div className="loading-message">Carregando configurações...</div>;
   }
+
+  const handleCheckboxChange = (panelId, visible) => {
+    updatePanelVisibility(panelId, visible);
+  };
+
+  const handleHomeRedirect = () => {
+    navigate("/"); // Redirect to home route
+  };
 
   return (
     <div className="admin-container">
@@ -25,13 +35,21 @@ export default function AdminPanel() {
           {panels.map((panel) => (
             <li key={panel.id} className="panel-item">
               <label>
-                <input type="checkbox" checked={panel.visible} readOnly />
+                <input
+                  type="checkbox"
+                  checked={panel.visible}
+                  onChange={(e) => handleCheckboxChange(panel.id, e.target.checked)}
+                />
                 {panel.name}
               </label>
             </li>
           ))}
         </ul>
       </div>
+      {/* Add Home button */}
+      <button className="home-button" onClick={handleHomeRedirect}>
+        Home
+      </button>
     </div>
   );
 }

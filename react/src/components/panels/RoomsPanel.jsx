@@ -5,23 +5,23 @@ const API_URL = "http://localhost:3001/api/schedules";
 export default function RoomsPanel({ currentTime }) {
   const [schedules, setSchedules] = useState([]);
   const [currentClasses, setCurrentClasses] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Busca os dados da API
     const fetchSchedules = async () => {
       try {
         const response = await fetch(API_URL);
 
         const contentType = response.headers.get("Content-Type");
         if (!contentType || !contentType.includes("application/json")) {
-            throw new Error("Resposta não é JSON válida.");
-          }
+          throw new Error("Resposta não é JSON válida.");
+        }
 
-          
         const data = await response.json();
         setSchedules(data);
       } catch (error) {
         console.error("Erro ao buscar horários:", error);
+        setError("Erro ao carregar os horários. Por favor, tente novamente.");
       }
     };
 
@@ -31,28 +31,35 @@ export default function RoomsPanel({ currentTime }) {
   useEffect(() => {
     if (!currentTime) return;
 
-    // Converte a hora atual em minutos totais
     const currentMinutes = timeToMinutes(currentTime);
+    console.log("Horário atual em minutos:", currentMinutes);
 
-    // Filtra as aulas que estão a decorrer
     const activeClasses = schedules.filter((room) =>
       room.schedule.some((lesson) => {
         const [start, end] = lesson.time.split(" - ");
         const startMinutes = timeToMinutes(start);
         const endMinutes = timeToMinutes(end);
 
-        return currentMinutes >= startMinutes && currentMinutes <= endMinutes;
+        console.log(
+          `Sala ${room.roomNumber} - ${lesson.module}: Início ${startMinutes}, Fim ${endMinutes}`
+        );
+
+        return currentMinutes >= startMinutes && currentMinutes < endMinutes;
       })
     );
 
+    console.log("Aulas a decorrer:", activeClasses);
     setCurrentClasses(activeClasses);
   }, [currentTime, schedules]);
 
-  // Função para converter hora (HH:MM) em minutos totais
   const timeToMinutes = (time) => {
     const [hours, minutes] = time.split(":").map(Number);
     return hours * 60 + minutes;
   };
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <div>
@@ -68,12 +75,12 @@ export default function RoomsPanel({ currentTime }) {
                   const currentMinutes = timeToMinutes(currentTime);
                   return (
                     currentMinutes >= timeToMinutes(start) &&
-                    currentMinutes <= timeToMinutes(end)
+                    currentMinutes < timeToMinutes(end)
                   );
                 })
                 .map((lesson, index) => (
                   <li key={index}>
-                    {lesson.module} - {lesson.time}
+                    <strong>{lesson.module}</strong> - {lesson.time}
                   </li>
                 ))}
             </ul>

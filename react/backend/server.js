@@ -15,21 +15,42 @@ const users = require("./usersData");
 const schedules = require("./schedulesData");
 const courses = require("./coursesData");
 const events = require("./eventsData");
+const restaurantData = require("./restaurantData");
+const transportsData = require("./transportsData");
+
+// Rota para obter os menus do restaurante por dia da semana
+app.get("/api/restaurant", (req, res) => {
+  const today = new Date();
+  const days = ["domingo", "segunda", "terca", "quarta", "quinta", "sexta", "sabado"];
+  const currentDay = days[today.getDay()];
+
+  // Verifica se o dia atual existe no restaurantData
+  if (restaurantData[currentDay]) {
+    res.status(200).json(restaurantData[currentDay]);
+  } else {
+    res.status(404).json({ message: "Menu não disponível para hoje." });
+  }
+});
 
 // Rota para obter os cursos por dia da semana
 app.get("/api/courses", (req, res) => {
-    res.json(courses);
-  });
+  res.json(courses);
+});
 
-  // Rota para obter a lista de eventos por dia
+// Rota para obter a lista de eventos por dia
 app.get("/api/events", (req, res) => {
   res.json(events);
 });
 
 // Rota para obter os horários de todas as salas
 app.get("/api/schedules", (req, res) => {
-    res.status(200).json(schedules);
-  });
+  res.status(200).json(schedules);
+});
+
+// Rota para obter os horários de comboios e autocarros
+app.get("/api/transports", (req, res) => {
+  res.status(200).json(transportsData);
+});
 
 // Rota POST: Validação do Login
 app.post("/api/login", (req, res) => {
