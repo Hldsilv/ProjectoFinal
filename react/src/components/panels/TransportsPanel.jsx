@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./TransportsPanel.css";
 
 export default function TransportsPanel() {
   const [transports, setTransports] = useState({ trains: [], buses: [] });
@@ -63,7 +64,7 @@ export default function TransportsPanel() {
 
   return (
     <div className="transports-panel">
-      <h2>Próximos Transportes</h2>
+      <h2>Transportes</h2>
 
       <div>
         <h3>Comboios</h3>

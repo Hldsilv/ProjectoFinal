@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import './RestaurantPanel.css'
 
 export default function RestaurantPanel() {
   const [menu, setMenu] = useState([]);
@@ -11,6 +12,7 @@ export default function RestaurantPanel() {
       try {
         const response = await axios.get("http://localhost:3001/api/restaurant");
         setMenu(response.data);
+        console.log(response.data);
         setLoading(false);
       } catch (err) {
         console.error("Erro ao buscar o menu do restaurante:", err.message);
@@ -31,15 +33,22 @@ export default function RestaurantPanel() {
   }
 
   return (
+    <div className="restarauntPanel-container">
     <div className="restaurant-panel">
-      <h2>Menu do Dia</h2>
-      <ul>
+      <h1 className="restaurant-title">Menu do Dia</h1>
+      <ul >
         {menu.map((item) => (
-          <li key={item.id}>
-            <strong>{item.name}</strong>: {item.description} - €{item.price.toFixed(2)}
+          <li key={item.id} className="menu-item">
+            <strong>{item.name}</strong>
+            <div className="item-details">
+              <p>{item.description}</p>
+              <span className="item-price">{item.price.toFixed(2)}€</span>
+            </div>
           </li>
         ))}
       </ul>
     </div>
+    </div>
   );
+  
 }

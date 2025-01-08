@@ -1,0 +1,60 @@
+.restarauntPanel-container {
+    padding: 20px;
+    color: white;
+}
+
+.restaurant-panel {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Efeito de sombra para destacar */
+    background-color: rgba(0, 0, 0, 0.4); /* Adicionando um fundo semi-transparente */
+}
+
+.restaurant-title {
+    font-size: 2em;
+    margin-bottom: 30px; /* Alterado para combinar com o Weather.css */
+    text-align: center;
+    font-weight: bold; /* Adicionado para destacar o título */
+}
+
+.restaurant-panel ul {
+    list-style: none;
+}
+
+.restaurant-panel li {
+    display: flex; /* Adicionado para alinhar os itens */
+    justify-content: space-between; /* Adicionado para espaçar os itens */
+    padding: 15px 0; /* Adicionado para espaçamento vertical */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Adicionado para separar os itens */
+}
+
+.restaurant-panel li span {
+    color: #ddd; /* Texto secundário */
+}
+
+.menu-item {
+    display: flex; /* Alinha os itens em linha */
+    flex-direction: column; /* Alinha os itens em coluna */
+    padding: 15px 0; /* Espaçamento vertical */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separador entre itens */
+}
+
+.item-details {
+    display: flex; /* Alinha descrição e preço em linha */
+    justify-content: space-between; /* Espaça descrição e preço */
+    align-items: center; /* Alinha verticalmente */
+    margin-top: 5px; /* Espaçamento entre o nome e os detalhes */
+}
+
+.menu-item p {
+    margin: 0; /* Remove margens padrão */
+    color: #ccc; /* Cor da descrição */
+    flex-grow: 1; /* Permite que a descrição ocupe o espaço disponível */
+    margin-right: 10px; /* Espaçamento entre a descrição e o preço */
+}
+
+.item-price {
+    font-weight: bold; /* Destaca o preço */
+    color: #fff; /* Cor do preço */
+}
+  

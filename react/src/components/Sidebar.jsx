@@ -9,7 +9,7 @@ export default function Sidebar() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentPanel((prev) => (prev + 1) % 3); // Alterna entre 0, 1 e 2
-    }, 7000);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, []);

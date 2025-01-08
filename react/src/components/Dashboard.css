@@ -34,7 +34,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url('../assets/geometric-pattern.png') center center;
   background-size: cover;
 }
 

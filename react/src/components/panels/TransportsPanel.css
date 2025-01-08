@@ -1,0 +1,33 @@
+.transports-panel {
+  padding: 20px;
+  color: white;
+}
+
+.transports-panel h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.transports-panel h3 {
+  font-size: 1.5em;
+  margin: 15px 0;
+  font-weight: bold;
+}
+
+.transports-panel ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.transports-panel li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.transports-panel strong {
+  font-weight: bold;
+} 
