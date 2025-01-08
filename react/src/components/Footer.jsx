@@ -50,11 +50,10 @@ export default function Footer() {
         ) : error ? (
           error
         ) : (
-          news.map((headline, index) => (
-            <span key={index}>
-              {headline} {index < news.length - 1 && " // "}
-            </span>
-          ))
+          <>
+            <span>{news.map((headline) => `${headline}\u00A0\u00A0\u00A0●\u00A0\u00A0\u00A0`).join('')}</span>
+            <span>{news.map((headline) => `${headline}\u00A0\u00A0\u00A0●\u00A0\u00A0\u00A0`).join('')}</span>
+          </>
         )}
       </div>
       <div className="time-display">{currentTime}</div>

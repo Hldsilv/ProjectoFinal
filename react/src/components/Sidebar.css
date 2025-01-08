@@ -1,0 +1,17 @@
+.sidebar {
+  height: 100%;
+  padding: 20px;
+}
+
+.rotation-container {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+} 
