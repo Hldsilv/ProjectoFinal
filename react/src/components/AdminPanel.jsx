@@ -47,25 +47,22 @@ export default function AdminPanel() {
         </ul>
       </div>
       <div className="images-container">
-        <h1 className="images-title">Imagens</h1>
+        <h1 className="images-title">Layouts</h1>
         <div className="images-grid">
           <div className="image-item">
-            <img src="/images/image1.jpg" alt="Image 1" />
+          <img src="/images/Natall.png" alt="Image 2" />
           </div>
           <div className="image-item">
-            <img src="/images/image2.jpg" alt="Image 2" />
+            <img src="/images/Carnavall.png" alt="Image 2" />
           </div>
           <div className="image-item">
-            <img src="/images/image3.jpg" alt="Image 3" />
+            <img src="/images/Pascoa.webp" alt="Image 3" />
           </div>
           <div className="image-item">
             <img src="/images/image4.jpg" alt="Image 4" />
           </div>
         </div>
       </div>
-      <button className="home-button" onClick={handleHomeRedirect}>
-        Home
-      </button>
     </div>
   );
 }
