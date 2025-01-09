@@ -1,6 +1,16 @@
 const courses = {
     segunda: [
-      { id: 1, name: "Introdução à Programação" },
+      { 
+        id: 1, 
+        name: "Digital Marketing & Business Strategy",
+        description: "Conhecimentos teóricos e competências técnicas para permitir conceber campanhas de marketing digital, criar conteúdos gráficos para o meio digital alinhados com as necessidades dos consumidores, gerir comunicação aproveitando as potencialidades das redes sociais e utilizar ferramentas de gestão.",
+        image: "/images/digital-marketing.jpg",
+        inicio: "2025-04-14",
+        fim: "2025-11-28",
+        horario: "09:00 - 17:00",
+        duracao: "950 Horas",
+        local: "São João da Madeira"
+      },
       { id: 2, name: "Design UI/UX" },
     ],
     terca: [

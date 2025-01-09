@@ -44,7 +44,7 @@ export default function TransportsPanel() {
     const currentMinutes = timeToMinutes(currentTime);
     const upcoming = schedule
       .filter((transport) => timeToMinutes(transport.departure) > currentMinutes)
-      .slice(0, 2); // Pega apenas os dois próximos
+      .slice(0, 3); // Pega apenas os dois próximos
     return upcoming;
   };
 
@@ -64,30 +64,30 @@ export default function TransportsPanel() {
 
   return (
     <div className="transports-panel">
-      <h2>Transportes</h2>
+      <h1 className="transport-title">Transportes</h1>
 
       <div>
         <h3>Comboios</h3>
-        <ul>
+        <div className="transport-items">
+          <div className="route-info">{transports.trains[0]?.route}</div>
           {getNextTransports(transports.trains).map((train) => (
-            <li key={train.id}>
-              <strong>Partida:</strong> {train.departure} - <strong>Chegada:</strong> {train.arrival}
-              <span> ({train.route})</span>
-            </li>
+            <div key={train.id} className="transport-item">
+              <strong>Partida:</strong> {train.departure}  <strong>Chegada:</strong> {train.arrival}
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
 
       <div>
         <h3>Autocarros</h3>
-        <ul>
+        <div className="transport-items">
+          <div className="route-info">{transports.buses[0]?.route}</div>
           {getNextTransports(transports.buses).map((bus) => (
-            <li key={bus.id}>
-              <strong>Partida:</strong> {bus.departure} - <strong>Chegada:</strong> {bus.arrival}
-              <span> ({bus.route})</span>
-            </li>
+            <div key={bus.id} className="transport-item">
+              <strong>Partida:</strong> {bus.departure}  <strong>Chegada:</strong> {bus.arrival}
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </div>
   );

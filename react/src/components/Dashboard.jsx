@@ -7,6 +7,7 @@ import RoomsPanel from "./panels/RoomsPanel";
 import CoursesPanel from "./panels/CoursesPanel";
 import EventsPanel from "./panels/EventsPanel";
 import Sidebar from "./Sidebar";
+import { motion, AnimatePresence } from "framer-motion";
 
 // Objeto com todos os componentes de painéis disponíveis (apenas os principais)
 const panelComponents = {
@@ -44,14 +45,23 @@ export default function Dashboard() {
         }
         return prevIndex + 1;
       });
-    }, 5000);
+    }, 10000);
 
     return () => clearInterval(interval);
   }, [visiblePanels]);
 
   const getCurrentContent = () => {
     if (currentPanelIndex === -1) {
-      return <h1 className="welcome-title">BEM-VINDO</h1>;
+      return (
+        <motion.h1 
+          className="welcome-title"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+        >
+          BEM-VINDO
+        </motion.h1>
+      );
     }
 
     const currentPanelName = visiblePanels[currentPanelIndex];
@@ -70,7 +80,21 @@ export default function Dashboard() {
         </video>
       </div>
       <div className="main-content">
-        <div className="welcome-section">{getCurrentContent()}</div>
+        <AnimatePresence mode="wait">
+          <motion.div 
+            key={currentPanelIndex}
+            className="welcome-section"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.05 }}
+            transition={{ 
+              duration: 0.5,
+              ease: "easeInOut"
+            }}
+          >
+            {getCurrentContent()}
+          </motion.div>
+        </AnimatePresence>
         <div className="weather-sidebar">
           <Sidebar />
         </div>

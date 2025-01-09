@@ -34,21 +34,18 @@ export default function RestaurantPanel() {
 
   return (
     <div className="restarauntPanel-container">
-    <div className="restaurant-panel">
-      <h1 className="restaurant-title">Menu do Dia</h1>
-      <ul >
-        {menu.map((item) => (
-          <li key={item.id} className="menu-item">
-            <strong>{item.name}</strong>
-            <div className="item-details">
-              <p>{item.description}</p>
-              <span className="item-price">{item.price.toFixed(2)}€</span>
+        <h1 className="restaurant-title">Menu do Dia</h1>
+        <div className="menu-items">
+          {menu.map((item) => (
+            <div key={item.id} className="menu-item">
+              <strong className="item-name">{item.name}</strong>
+              <div className="item-details">
+                <p>{item.description}</p>
+                <span className="item-price">{item.price.toFixed(2)}€</span>
+              </div>
             </div>
-          </li>
-        ))}
-      </ul>
-    </div>
-    </div>
+          ))}
+        </div>
+      </div>
   );
-  
 }
