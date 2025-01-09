@@ -2,11 +2,27 @@ import React, { useState, useEffect } from "react";
 
 const API_URL = "http://localhost:3001/api/schedules";
 
-export default function RoomsPanel({ currentTime }) {
+export default function RoomsPanel() {
   const [schedules, setSchedules] = useState([]);
   const [currentClasses, setCurrentClasses] = useState([]);
+  const [currentTime, setCurrentTime] = useState("");
   const [error, setError] = useState(null);
 
+  // Atualiza a hora atual a cada minuto
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const time = now.toTimeString().slice(0, 5); // HH:MM
+      setCurrentTime(time);
+    };
+
+    updateTime(); // Atualiza imediatamente ao carregar o componente
+    const interval = setInterval(updateTime, 60000); // Atualiza a cada minuto
+
+    return () => clearInterval(interval); // Limpa o intervalo ao desmontar
+  }, []);
+
+  // Fetch schedules from API
   useEffect(() => {
     const fetchSchedules = async () => {
       try {
@@ -28,33 +44,38 @@ export default function RoomsPanel({ currentTime }) {
     fetchSchedules();
   }, []);
 
+  // Filter active classes
   useEffect(() => {
     if (!currentTime) return;
 
-    const currentMinutes = timeToMinutes(currentTime);
-    console.log("Horário atual em minutos:", currentMinutes);
+    try {
+      const currentMinutes = timeToMinutes(currentTime);
 
-    const activeClasses = schedules.filter((room) =>
-      room.schedule.some((lesson) => {
-        const [start, end] = lesson.time.split(" - ");
-        const startMinutes = timeToMinutes(start);
-        const endMinutes = timeToMinutes(end);
+      const activeClasses = schedules.filter((room) =>
+        room.schedule.some((lesson) => {
+          const [start, end] = lesson.time.split(" - ");
+          const startMinutes = timeToMinutes(start);
+          const endMinutes = timeToMinutes(end);
 
-        console.log(
-          `Sala ${room.roomNumber} - ${lesson.module}: Início ${startMinutes}, Fim ${endMinutes}`
-        );
+          return currentMinutes >= startMinutes && currentMinutes < endMinutes;
+        })
+      );
 
-        return currentMinutes >= startMinutes && currentMinutes < endMinutes;
-      })
-    );
-
-    console.log("Aulas a decorrer:", activeClasses);
-    setCurrentClasses(activeClasses);
+      setCurrentClasses(activeClasses);
+    } catch (err) {
+      console.error("Erro ao processar horários:", err.message);
+    }
   }, [currentTime, schedules]);
 
+  // Convert time HH:MM to total minutes
   const timeToMinutes = (time) => {
-    const [hours, minutes] = time.split(":").map(Number);
-    return hours * 60 + minutes;
+    try {
+      const [hours, minutes] = time.split(":").map(Number);
+      return hours * 60 + minutes;
+    } catch (err) {
+      console.error("Erro ao converter tempo:", time);
+      return 0; // Valor padrão para erros
+    }
   };
 
   if (error) {
@@ -64,6 +85,7 @@ export default function RoomsPanel({ currentTime }) {
   return (
     <div>
       <h2>Salas com Aulas a Decorrer</h2>
+      <p>Hora atual: {currentTime}</p>
       {currentClasses.length > 0 ? (
         currentClasses.map((room) => (
           <div key={room.roomNumber}>
