@@ -1,56 +1,59 @@
 import React, { useState, useEffect } from "react";
+import "./EventsPanel.css";
 
 const API_URL = "http://localhost:3001/api/events";
 
 export default function EventsPanel() {
   const [events, setEvents] = useState([]);
   const [currentDayEvents, setCurrentDayEvents] = useState([]);
-  const [nextDayEvents, setNextDayEvents] = useState([]);
-  const [showNextDay, setShowNextDay] = useState(false);
-
-  const daysOfWeek = ["domingo", "segunda", "terca", "quarta", "quinta", "sexta", "sabado"];
-
-  // Função para obter o índice do dia atual
-  const getDayIndex = () => new Date().getDay();
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         const response = await fetch(API_URL);
         if (!response.ok) throw new Error("Erro ao buscar os eventos");
-
         const data = await response.json();
+        
+        console.log('Data received from API:', data); // Debug log
 
-        const todayIndex = getDayIndex();
-        const nextDayIndex = (todayIndex + 1) % 7; // Garante que sábado vai para domingo
-
-        setCurrentDayEvents(data[daysOfWeek[todayIndex]] || []);
-        setNextDayEvents(data[daysOfWeek[nextDayIndex]] || []);
+        // Pegando apenas o primeiro evento da primeira chave
+        const firstDay = Object.keys(data)[0];
+        console.log('First day:', firstDay); // Debug log
+        
+        if (data[firstDay] && data[firstDay].length > 0) {
+          console.log('First day events:', data[firstDay]); // Debug log
+          setCurrentDayEvents([data[firstDay][0]]);
+        }
       } catch (error) {
         console.error("Erro ao buscar eventos:", error.message);
       }
     };
 
     fetchEvents();
-
-    // Alterna entre os eventos do dia atual e do dia seguinte a cada 10 segundos
-    const interval = setInterval(() => {
-      setShowNextDay((prev) => !prev);
-    }, 10000);
-
-    return () => clearInterval(interval); // Limpa o intervalo ao desmontar o componente
   }, []);
 
+  if (!currentDayEvents || !currentDayEvents.length) {
+    return <div className="events-panel">Não há eventos hoje</div>;
+  }
+
+  const currentEvent = currentDayEvents[0];
+  console.log('currentEvent:', currentEvent); // Para debug
+
   return (
-    <div>
-      <h2>Eventos de {showNextDay ? "Amanhã" : "Hoje"}</h2>
-      <ul>
-        {(showNextDay ? nextDayEvents : currentDayEvents).map((event) => (
-          <li key={event.id}>
-            <strong>{event.name}</strong> - {event.location}
-          </li>
-        ))}
-      </ul>
+    <div className="events-panel">
+      <div className="event-title-card">
+        <h1>Evento: {currentEvent.name}</h1>
+      </div>
+
+      <div className="event-time-card">
+        <div className="hora-display">
+          {currentEvent.horario}
+        </div>
+        <div className="underline"></div>
+        <div className="future-date">
+          {currentEvent.data}
+        </div>
+      </div>
     </div>
   );
 }

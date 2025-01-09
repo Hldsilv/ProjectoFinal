@@ -16,7 +16,11 @@ export const DashboardProvider = ({ children }) => {
     const fetchPanels = async () => {
       try {
         const response = await axios.get("http://localhost:3001/api/panels");
-        setPanels(response.data);
+        // Filtrar apenas os painéis principais
+        const mainPanels = response.data.filter(panel => 
+          ["RoomsPanel", "CoursesPanel", "EventsPanel"].includes(panel.component)
+        );
+        setPanels(mainPanels);
         setLoading(false);
       } catch (error) {
         console.error("Erro ao buscar os painéis:", error.message);
@@ -34,9 +38,13 @@ export const DashboardProvider = ({ children }) => {
     );
     setPanels(updatedPanels);
 
-    // Atualiza no backend
+    // Atualiza no backend apenas os painéis principais
     axios
-      .post("http://localhost:3001/api/panels", { updatedPanels })
+      .post("http://localhost:3001/api/panels", { 
+        updatedPanels: updatedPanels.filter(panel => 
+          ["RoomsPanel", "CoursesPanel", "EventsPanel"].includes(panel.component)
+        )
+      })
       .catch((error) => console.error("Erro ao atualizar painéis:", error.message));
   };
 

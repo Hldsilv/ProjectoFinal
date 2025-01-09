@@ -18,17 +18,27 @@
   padding: 0 20px;
   display: flex;
   align-items: center;
-  font-size: 1.2em;
+  font-size: 2em;
+  position: relative;
+  width: 100%;
+  font-family: 'Open Sans', sans-serif;
+  padding-left: 0;
+  z-index: 1;
 }
 
 .news-ticker span {
   display: inline-block;
-  animation: moveLeft 20s linear infinite;
+  animation: moveLeft 250s linear infinite;
+  padding-left: 100%;
+}
+
+.news-ticker span:nth-child(2) {
+  animation-delay: -15s;
 }
 
 @keyframes moveLeft {
   0% {
-    transform: translateX(100%);
+    transform: translateX(0);
   }
   100% {
     transform: translateX(-100%);
@@ -47,6 +57,11 @@
   min-width: 200px;
   font-size: 1.5vw;
   color: #ffffff;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
 }
 
 /* Estilo para o relógio */

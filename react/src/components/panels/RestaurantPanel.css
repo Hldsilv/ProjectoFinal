@@ -1,0 +1,69 @@
+.restarauntPanel-container {
+    padding: clamp(15px, 3vw, 20px);
+    color: white;
+    height: 100%;
+    max-width: clamp(300px, 90vw, 400px);
+    margin: 0 auto;
+}
+
+.restaurant-title {
+    font-size: clamp(1.5em, 4vw, 2.5em);
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.menu-items {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 4vw, 35px);
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: column;
+    padding: clamp(15px, 3vw, 25px) 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: clamp(1em, 2.5vw, 1.2em);
+}
+
+.item-name {
+    margin-bottom: clamp(10px, 2vw, 15px);
+    font-size: clamp(1.1em, 2.5vw, 1.3em);
+}
+
+.item-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: clamp(15px, 3vw, 30px);
+}
+
+.menu-item p {
+    margin: 0;
+    color: #ccc;
+    flex-grow: 1;
+    font-size: clamp(0.9em, 2vw, 1.1em);
+    line-height: 1.4;
+}
+
+.item-price {
+    font-weight: bold;
+    color: #fff;
+    font-size: clamp(1em, 2.5vw, 1.2em);
+    white-space: nowrap;
+    padding-left: clamp(10px, 2vw, 20px);
+}
+
+/* Para telas muito pequenas */
+@media (max-width: 350px) {
+    .item-details {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .item-price {
+        padding-left: 0;
+    }
+}
+  

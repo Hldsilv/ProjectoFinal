@@ -104,8 +104,9 @@
 
 .home-button {
   position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
   bottom: 20px;
-  right: 20px;
   padding: 10px 20px;
   background-color: #007bff;
   color: white;
@@ -115,8 +116,44 @@
   font-size: 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
 
 .home-button:hover {
   background-color: #0056b3;
+}
+
+.images-container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 2rem auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.images-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.image-item {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.15);
+  transition: transform 0.3s ease;
+}
+.images-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: white;
+  font-weight: 600;
 }

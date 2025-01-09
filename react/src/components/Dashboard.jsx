@@ -1,55 +1,48 @@
 import React, { useState, useEffect } from "react";
 import "./Dashboard.css";
 import { useDashboard } from "../context/DashboardContext";
-import Weather from "./Weather";
 import Header from "./Header";
 import Footer from "./Footer";
 import RoomsPanel from "./panels/RoomsPanel";
 import CoursesPanel from "./panels/CoursesPanel";
-import TransportsPanel from "./panels/TransportsPanel";
 import EventsPanel from "./panels/EventsPanel";
-import WeatherPanel from "./panels/WeatherPanel";
-import RestaurantPanel from "./panels/RestaurantPanel";
+import Sidebar from "./Sidebar";
+import { motion, AnimatePresence } from "framer-motion";
 
-// Objeto com todos os componentes de painéis disponíveis
+// Objeto com todos os componentes de painéis disponíveis (apenas os principais)
 const panelComponents = {
   RoomsPanel,
   CoursesPanel,
-  TransportsPanel,
   EventsPanel,
-  WeatherPanel,
-  RestaurantPanel,
 };
 
 export default function Dashboard() {
   const { panels } = useDashboard();
-  const [currentPanelIndex, setCurrentPanelIndex] = useState(-1); // -1 representa o BEM VINDO
+  const [currentPanelIndex, setCurrentPanelIndex] = useState(-1);
 
-
-  // Array com a ordem dos painéis visíveis
-  const visiblePanels = panels.filter((panel) => panel.visible).map((panel) => panel.component);
+  // Array com a ordem dos painéis visíveis (filtrando apenas os painéis principais)
+  const visiblePanels = panels
+    .filter((panel) => 
+      panel.visible && 
+      ["RoomsPanel", "CoursesPanel", "EventsPanel"].includes(panel.component)
+    )
+    .map((panel) => panel.component);
 
   // Array com a ordem dos painéis
   const panelOrder = [
     "RoomsPanel",
     "CoursesPanel",
-    "TransportsPanel",
     "EventsPanel",
-    "RestaurantPanel",
   ];
 
-
-  // Efeito para alternar entre Bem-Vindo e os painéis visíveis
   useEffect(() => {
-    if (visiblePanels.length === 0) return; // Se não houver painéis visíveis, não alterna
+    if (visiblePanels.length === 0) return;
 
     const interval = setInterval(() => {
       setCurrentPanelIndex((prevIndex) => {
-        // Se for o último painel visível, volta para BEM VINDO (-1)
         if (prevIndex === visiblePanels.length - 1) {
           return -1;
         }
-        // Caso contrário, vai para o próximo painel
         return prevIndex + 1;
       });
     }, 10000);
@@ -57,14 +50,20 @@ export default function Dashboard() {
     return () => clearInterval(interval);
   }, [visiblePanels]);
 
-  // Encontra o painel atual baseado no índice
   const getCurrentContent = () => {
-    // Se o índice for -1, mostra BEM VINDO
     if (currentPanelIndex === -1) {
-      return <h1 className="welcome-title">BEM-VINDO</h1>;
+      return (
+        <motion.h1 
+          className="welcome-title"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+        >
+          BEM-VINDO
+        </motion.h1>
+      );
     }
 
-    // Caso contrário, mostra o painel correspondente
     const currentPanelName = visiblePanels[currentPanelIndex];
     if (!currentPanelName) return null;
 
@@ -74,19 +73,30 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard-container">
-
       <Header />
-
       <div className="vid-back">
         <video autoPlay muted loop>
           <source src="/videos/perfectly.mp4" type="video/mp4" />
         </video>
       </div>
-
       <div className="main-content">
-        <div className="welcome-section">{getCurrentContent()}</div>
+        <AnimatePresence mode="wait">
+          <motion.div 
+            key={currentPanelIndex}
+            className="welcome-section"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.05 }}
+            transition={{ 
+              duration: 0.5,
+              ease: "easeInOut"
+            }}
+          >
+            {getCurrentContent()}
+          </motion.div>
+        </AnimatePresence>
         <div className="weather-sidebar">
-          <Weather />
+          <Sidebar />
         </div>
       </div>
       <Footer />

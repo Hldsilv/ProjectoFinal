@@ -1,0 +1,66 @@
+.transports-panel {
+  padding: clamp(15px, 3vw, 20px);
+  color: white;
+  max-width: clamp(300px, 90vw, 400px);
+  margin: 0 auto;
+}
+
+.transport-title {
+  font-size: clamp(1.5em, 4vw, 2.5em);
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.transports-panel h2 {
+  font-size: clamp(1.5em, 4vw, 2.5em);
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.transports-panel h3 {
+  font-size: clamp(1.2em, 3vw, 1.5em);
+  margin-top: 60px;
+  font-weight: bold;
+}
+
+.transport-items {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40px;
+}
+
+.transport-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: clamp(10px, 2vw, 15px) 0;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: clamp(1em, 2.5vw, 1.2em);
+}
+
+.transport-item:last-child {
+  border-bottom: none;
+}
+
+.transport-item strong {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.transport-item span {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.route-info {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: clamp(0.9em, 2vw, 1.1em);
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.separator {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0 0 20px 0;
+} 

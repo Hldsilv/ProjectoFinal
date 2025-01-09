@@ -34,7 +34,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url('../assets/geometric-pattern.png') center center;
   background-size: cover;
 }
 
@@ -93,7 +92,7 @@
   width: max-content;
 }
 
-.time-display {
+.time-displayy {
   background-color: white;
   color: black;
   padding: 1rem 2rem;

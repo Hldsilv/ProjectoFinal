@@ -1,29 +1,23 @@
 const events = {
-    segunda: [
-      { id: 1, name: "Introdução à Cibersegurança", location: "Online" },
-      { id: 2, name: "Webinar sobre Cloud Computing", location: "Microsoft Teams" },
+    evento1: [
+      { id: 1, name: "Introdução à Cibersegurança", horario: "09:00 - 16:00", data: "Janeiro 06, 2025" },
     ],
-    terca: [
-      { id: 3, name: "Workshop React Básico", location: "Zoom" },
-      { id: 4, name: "Palestra: Segurança em Redes", location: "CESAE Digital" },
+    evento2: [
+      { id: 2, name: "Workshop React Básico", horario: "09:00 - 16:00", data: "Janeiro 07, 2025" },
     ],
-    quarta: [
-      { id: 5, name: "Hands-on AWS Services", location: "Online" },
-      { id: 6, name: "Seminário: Desenvolvimento Backend", location: "Google Meet" },
+    evento3: [
+      { id: 3, name: "Hands-on AWS Services", horario: "09:00 - 16:00", data: "Janeiro 08, 2025" },
     ],
-    quinta: [
-      { id: 7, name: "Curso de Docker e Kubernetes", location: "CESAE Presencial" },
-      { id: 8, name: "Introdução a Machine Learning", location: "Online" },
+    evento4: [
+      { id: 4, name: "Curso de Docker e Kubernetes", horario: "09:00 - 16:00", data: "Janeiro 09, 2025" },
     ],
-    sexta: [
-      { id: 9, name: "Meetup DevOps e CI/CD", location: "Discord" },
-      { id: 10, name: "Sessão sobre Inteligência Artificial", location: "Zoom" },
+    evento5: [
+      { id: 5, name: "Meetup DevOps e CI/CD", horario: "09:00 - 16:00", data: "Janeiro 10, 2025" },
     ],
-    sabado: [
-      { id: 11, name: "Maratona de Coding Hackathon", location: "Online" },
-      { id: 12, name: "Introdução ao Git e GitHub", location: "CESAE Digital" },
-    ],
-  };
-  
-  module.exports = events;
+    evento6: [
+      { id: 6, name: "Maratona de Coding Hackathon", horario: "09:00 - 16:00", data: "Janeiro 11, 2025" },
+    ]
+};
+
+module.exports = events;
   
