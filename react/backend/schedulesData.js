@@ -20,15 +20,9 @@ const schedules = [
         { time: "14:00 - 17:00", module: "Scrum e Agile" },
       ],
     },
+
     {
       roomNumber: "1.5",
-      schedule: [
-        { time: "09:00 - 12:00", module: "Cibersegurança Básica" },
-        { time: "14:00 - 17:00", module: "Testes de Penetração" },
-      ],
-    },
-    {
-      roomNumber: "1.6",
       schedule: [
         { time: "09:00 - 12:00", module: "React Básico" },
         { time: "14:00 - 17:00", module: "React Avançado e Hooks" },

@@ -45,7 +45,7 @@ export default function Dashboard() {
         }
         return prevIndex + 1;
       });
-    }, 10000);
+    }, 9000);
 
     return () => clearInterval(interval);
   }, [visiblePanels]);
@@ -84,9 +84,9 @@ export default function Dashboard() {
           <motion.div 
             key={currentPanelIndex}
             className="welcome-section"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.05 }}
+            initial={{ opacity: 0, x: -500 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, y: -500 }}
             transition={{ 
               duration: 0.5,
               ease: "easeInOut"

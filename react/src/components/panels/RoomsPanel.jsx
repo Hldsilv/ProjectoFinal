@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./RoomsPanel.css";
 
 const API_URL = "http://localhost:3001/api/schedules";
 
@@ -27,7 +28,6 @@ export default function RoomsPanel() {
     const fetchSchedules = async () => {
       try {
         const response = await fetch(API_URL);
-
         const contentType = response.headers.get("Content-Type");
         if (!contentType || !contentType.includes("application/json")) {
           throw new Error("Resposta não é JSON válida.");
@@ -83,34 +83,39 @@ export default function RoomsPanel() {
   }
 
   return (
-    <div>
-      <h2>Salas com Aulas a Decorrer</h2>
-      <p>Hora atual: {currentTime}</p>
-      {currentClasses.length > 0 ? (
-        currentClasses.map((room) => (
-          <div key={room.roomNumber}>
-            <h3>Sala {room.roomNumber}</h3>
-            <ul>
-              {room.schedule
-                .filter((lesson) => {
-                  const [start, end] = lesson.time.split(" - ");
-                  const currentMinutes = timeToMinutes(currentTime);
-                  return (
-                    currentMinutes >= timeToMinutes(start) &&
-                    currentMinutes < timeToMinutes(end)
-                  );
-                })
-                .map((lesson, index) => (
-                  <li key={index}>
-                    <strong>{lesson.module}</strong> - {lesson.time}
-                  </li>
-                ))}
-            </ul>
-          </div>
-        ))
-      ) : (
-        <p>Não há aulas a decorrer no momento.</p>
-      )}
+    <div className="rooms-container">
+      <div className="rooms-header">
+        <h1>Salas</h1>
+      </div>
+
+      <div className="rooms-content">
+  
+        {currentClasses.length > 0 ? (
+          currentClasses.map((room) => (
+            <div key={room.roomNumber}>
+              <h3 className="room-title">Sala {room.roomNumber}</h3>
+              <div>
+                {room.schedule
+                  .filter((lesson) => {
+                    const [start, end] = lesson.time.split(" - ");
+                    const currentMinutes = timeToMinutes(currentTime);
+                    return (
+                      currentMinutes >= timeToMinutes(start) &&
+                      currentMinutes < timeToMinutes(end)
+                    );
+                  })
+                  .map((lesson, index) => (
+                    <div key={index} className="room-item">
+                      <strong>{lesson.module}</strong> - {lesson.time}
+                    </div>
+                  ))}
+              </div>
+            </div>
+          ))
+        ) : (
+          <p className="no-classes">Não há aulas a decorrer no momento.</p>
+        )}
+      </div>
     </div>
   );
 }
