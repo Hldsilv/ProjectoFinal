@@ -19,6 +19,8 @@ const panelComponents = {
 export default function Dashboard() {
   const { panels } = useDashboard();
   const [currentPanelIndex, setCurrentPanelIndex] = useState(-1);
+  const [backgroundImage, setBackgroundImage] = useState(localStorage.getItem('dashboardBackground') || '/images/default-bg.jpg');
+  const [welcomeTitle, setWelcomeTitle] = useState(localStorage.getItem('welcomeTitle') || 'BEM-VINDO');
 
   // Array com a ordem dos painéis visíveis (filtrando apenas os painéis principais)
   const visiblePanels = panels
@@ -50,6 +52,22 @@ export default function Dashboard() {
     return () => clearInterval(interval);
   }, [visiblePanels]);
 
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const newImage = localStorage.getItem('dashboardBackground');
+      const newTitle = localStorage.getItem('welcomeTitle');
+      if (newImage) {
+        setBackgroundImage(newImage);
+      }
+      if (newTitle) {
+        setWelcomeTitle(newTitle);
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
+
   const getCurrentContent = () => {
     if (currentPanelIndex === -1) {
       return (
@@ -59,7 +77,7 @@ export default function Dashboard() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
         >
-          BEM-VINDO
+          {welcomeTitle}
         </motion.h1>
       );
     }
@@ -100,6 +118,13 @@ export default function Dashboard() {
         </div>
       </div>
       <Footer />
+      <div className="background-wrapper">
+        <img 
+          src={backgroundImage} 
+          alt="background" 
+          className="background-image"
+        />
+      </div>
     </div>
   );
 }

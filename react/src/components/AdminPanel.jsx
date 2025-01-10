@@ -1,11 +1,11 @@
 import React from "react";
 import { useDashboard } from "../context/DashboardContext";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { useNavigate } from "react-router-dom"; 
 import "./AdminPanel.css";
 
 export default function AdminPanel() {
   const { panels, loading, updatePanelVisibility } = useDashboard();
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate(); 
 
   if (loading) {
     return <div className="loading-message">Carregando configurações...</div>;
@@ -16,7 +16,14 @@ export default function AdminPanel() {
   };
 
   const handleHomeRedirect = () => {
-    navigate("/"); // Redirect to home route
+    navigate("/"); 
+  };
+
+  const handleLayoutChange = (imageName, title) => {
+    console.log('Botão clicado - Mudando layout para:', imageName);
+    localStorage.setItem('dashboardBackground', `/images/${imageName}`);
+    localStorage.setItem('welcomeTitle', title);  
+    navigate('/');
   };
 
   return (
@@ -50,19 +57,48 @@ export default function AdminPanel() {
         <h1 className="images-title">Layouts</h1>
         <div className="images-grid">
           <div className="image-item">
-          <img src="/images/Natall.png" alt="Image 2" />
+            <img src="/images/Natall.jpg" alt="Image 1" />
+            <button 
+              className="layout-button"
+              onClick={() => handleLayoutChange('Natal.jpg', 'FELIZ NATAL')}
+            >
+              Layout Natal
+            </button>
           </div>
           <div className="image-item">
-            <img src="/images/Carnavall.png" alt="Image 2" />
+            <img src="/images/carnavall.png" alt="Image 2" />
+            <button 
+              className="layout-button"
+              onClick={() => handleLayoutChange('Carnaval.png', 'BOM CARNAVAL')}
+            >
+              Layout Páscoa
+            </button>
           </div>
           <div className="image-item">
-            <img src="/images/Pascoa.webp" alt="Image 3" />
+            <img src="/images/pascoa.png" alt="Image 3" />
+            <button 
+              className="layout-button"
+              onClick={() => handleLayoutChange('Pascoa.webp', 'BOA PÁSCOA')}
+            >
+              Layout Carnaval
+            </button>
           </div>
           <div className="image-item">
-            <img src="/images/image4.jpg" alt="Image 4" />
+            <img src="/images/normal.png" alt="Image 4" />
+            <button 
+              className="layout-button"
+              onClick={() => handleLayoutChange('Branco.png', 'BEM-VINDO')}
+            >
+              Layout Padrão
+            </button>
           </div>
         </div>
+      
       </div>
+      <button className="home-button" onClick={handleHomeRedirect}>
+        Home
+      </button>
+      
     </div>
   );
 }
